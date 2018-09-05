@@ -1,0 +1,960 @@
+{
+	"folder_history":
+	[
+		"/E/Crmhf/ProjectSublime/zy",
+		"/C/inetpub/wwwroot/zj"
+	],
+	"last_window_id": 1,
+	"settings":
+	{
+	},
+	"windows":
+	[
+		{
+			"auto_complete":
+			{
+				"selected_items":
+				[
+					[
+						"fa",
+						"false"
+					],
+					[
+						"ov",
+						"overflow"
+					],
+					[
+						"b",
+						"background"
+					],
+					[
+						"jq",
+						"jQuery.get	jQuery.get"
+					]
+				]
+			},
+			"buffers":
+			[
+				{
+					"file": "/C/Users/Crmhf/Desktop/11.py",
+					"settings":
+					{
+						"buffer_size": 0,
+						"line_ending": "Windows"
+					}
+				},
+				{
+					"contents": "",
+					"file": "/C/Users/Crmhf/Desktop/222.py",
+					"file_size": -1,
+					"file_write_time": -1,
+					"settings":
+					{
+						"buffer_size": 0,
+						"line_ending": "Windows"
+					}
+				},
+				{
+					"file": "/C/Users/Crmhf/Desktop/111.py",
+					"settings":
+					{
+						"buffer_size": 0,
+						"line_ending": "Windows"
+					}
+				},
+				{
+					"file": "/D/Crmhf/Projects/Webstorm/EsriWh/WebApp/Wisdrisoft/0.直接使用基础的地图.html",
+					"settings":
+					{
+						"buffer_size": 1185,
+						"line_ending": "Windows"
+					}
+				},
+				{
+					"file": "/D/Crmhf/Projects/Webstorm/EsriWh/WebApp/Wisdrisoft/2.自定义弹出控件_检测设备.html",
+					"settings":
+					{
+						"buffer_size": 3089,
+						"line_ending": "Windows"
+					}
+				},
+				{
+					"contents": "\n<!doctype html>\n<html>\n<head>\n    <meta charset=\"utf-8\">\n    <meta name=\"viewport\" content=\"initial-scale=1, maximum-scale=1,user-scalable=no\">\n    <title></title>\n\n    <link rel=\"stylesheet\" href=\"http://esri705.gis.local:8080/arcgis_js_api/library/3.10/3.10/js/dojo/dijit/themes/tundra/tundra.css\">\n    <link rel=\"stylesheet\" href=\"http://esri705.gis.local:8080/arcgis_js_api/library/3.10/3.10/js/esri/css/esri.css\">\n    <style>\n        html, body {\n            height: 100%;\n            width: 100%;\n            margin: 0;\n            padding: 0;\n        }\n\n        #map {\n            margin: 0;\n            padding: 0;\n        }\n\n        #dashboard {\n            color: #fff;\n            font-family: arial;\n            height: auto;\n            overflow: hidden;\n            padding: 5px;\n            position: absolute;\n            right: 30px;\n            text-align: center;\n            top: 30px;\n            width: 300px;\n            z-index: 40;\n            -moz-box-shadow: 0 0 5px #888;\n            -webkit-box-shadow: 0 0 5px #888;\n            box-shadow: 0 0 5px #888;\n            -webkit-border-radius: 4px;\n            -moz-border-radius: 4px;\n            border-radius: 4px;\n            border: 1px solid #fff;\n        }\n\n        #dashboardWidgets {\n            background: #fff;\n            color: #888;\n            margin: 0 auto;\n            text-align: left;\n        }\n    </style>\n\n    <script>var dojoConfig = { parseOnLoad: true };</script>\n    <script src=\"http://esri705.gis.local:8080/arcgis_js_api/library/3.10/3.10/init.js\"></script>\n    <script>\n\n        var map;\n        require([\n          \"dijit/layout/BorderContainer\",\n          \"dijit/layout/ContentPane\",\n          \"esri/dijit/Gauge\",\n          \"esri/map\",\n          \"esri/layers/ArcGISTiledMapServiceLayer\",\n          \"esri/layers/FeatureLayer\",\n          \"dojo/domReady!\"\n        ], function (\n            BorderContainer,\n            ContentPane,\n            Gauge,\n          Map,\n          ArcGISTiledMapServiceLayer,\n            FeatureLayer) {\n            map = new Map(\"mapDiv\", {\n                center: [114.41, 30.78],\n                zoom: 10\n            });\n            //Takes a URL to a cached map service.\n            var tiledMapServiceLayer = new ArcGISTiledMapServiceLayer(\"http://esri705.gis.local:6080/arcgis/rest/services/hbtest_tiled/MapServer\", {\n                \"opacity\": 0.5\n            });\n            map.addLayer(tiledMapServiceLayer);\n\n            // add the states layer as a feature layer\n            var featuresUrl = \"http://esri705.gis.local:6080/arcgis/rest/services/hbtest_mac/MapServer/0\";\n            var fl = new esri.layers.FeatureLayer(featuresUrl, {\n                \"id\": \"mac\",\n                \"mode\": esri.layers.FeatureLayer.MODE_ONDEMAND,\n                \"outFields\": [\"OBJECTID\", \"Mac_Name\", \"Name_CHN\",\"Mac_Type\"]\n            });\n            dojo.connect(fl, \"onLoad\", createGauge);\n            map.addLayer(fl);\n        });\n\n        function createGauge(fl) {\n\n\n            // create JSON and pass it to the Gauge ctor\n            var gaugeParams = {\n                \"caption\": \"仪表盘显示测试.\",\n                \"color\": \"#c0c\",\n                \"dataField\": \"Mac_Type\", // 用于显示到当前仪表盘里面的字段\n                \"dataFormat\": \"value\",\n                \"dataLabelField\": \"Mac_Name\", // 仪表盘的标签\n                \"layer\": fl,\n                \"maxDataValue\": 4, // \n                \"noFeatureLabel\": \"No name\",\n                \"title\": \"以下通过一个字段来展示仪表盘\",\n                \"unitLabel\": \" 类型\"\n            }\n            gauge = new esri.dijit.Gauge(gaugeParams, \"gaugeDiv\");\n            gauge.startup();\n\n            // set up mouse over highlighting\n          //  var hGraphics = new esri.layers.GraphicsLayer({ \"id\": \"highlights\" });\n            var hGraphics = new esri.layers.GraphicsLayer();\n            map.addLayer(hGraphics);\n\n            var highlight = new esri.symbol.SimpleMarkerSymbol()\n              .setColor(gaugeParams.color).setSize(12);\n\n            dojo.connect(fl, \"onMouseOver\", function (e) {\n                hGraphics.clear();\n                hGraphics.add(\n                  new esri.Graphic(e.graphic.geometry, highlight)\n                );\n            });\n        }\n    </script>\n</head>\n\n<body class=\"tundra\">\n    <div data-dojo-type=\"dijit.layout.BorderContainer\"\n         data-dojo-props=\"design:'headline',gutters:false\"\n         style=\"width: 100%; height: 100%; margin: 0;\">\n        <div id=\"mapDiv\"\n             data-dojo-type=\"dijit.layout.ContentPane\"\n             data-dojo-props=\"region:'center'\">\n\n            <div id=\"dashboard\">\n                Dashboard\n                <div id=\"dashboardWidgets\">\n                    <div id=\"gaugeDiv\"></div>\n                </div>\n            </div>\n\n        </div>\n    </div>\n</body>\n</html>\n",
+					"file": "/D/Crmhf/Projects/Webstorm/EsriWh/WebApp/Wisdrisoft/2.检测设备弹出仪表信息.html",
+					"file_size": 5025,
+					"file_write_time": 130731054034737744,
+					"settings":
+					{
+						"buffer_size": 4785,
+						"line_ending": "Windows",
+						"scratch": true
+					}
+				},
+				{
+					"contents": "<!DOCTYPE html>\n<html>\n<head>\n    <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n    <!--The viewport meta tag is used to improve the presentation and behavior of the samples\n      on iOS devices-->\n    <meta name=\"viewport\" content=\"initial-scale=1, maximum-scale=1,user-scalable=no\">\n    <title>根据设备名称进行搜索</title>\n    <link rel=\"stylesheet\" href=\"http://esri705.gis.local:8080/arcgis_js_api/library/3.10/3.10/js/esri/css/esri.css\" />\n    <style>\n        html, body, #mapDiv {padding: 0; margin: 0;height: 100%;}\n        #searchPane {position:absolute;top:20px;right:0;width:380px;height:800px;background-color:#666;overflow-y:auto}\n        #info {padding: 5px;margin: 5px;background-color: #eee;font-size:10px;}\n    </style>\n    <script src=\"http://esri705.gis.local:8080/arcgis_js_api/library/3.10/3.10/init.js\"></script>\n    <script>\n        var map;\n\n        require([\n          \"esri/map\",\n          \"esri/layers/ArcGISTiledMapServiceLayer\",\n           \"esri/graphic\",\n          \"esri/tasks/query\", \"esri/tasks/QueryTask\",\n          \"esri/symbols/SimpleMarkerSymbol\",\"esri/symbols/SimpleLineSymbol\",\"esri/Color\",\n           \"dojo/dom\", \"dojo/on\", \"dojo/domReady!\"\n        ], function (\n          Map, ArcGISTiledMapServiceLayer,Graphic,\n          Query, QueryTask, SimpleMarkerSymbol, SimpleLineSymbol, Color,dom, on) {\n            map = new Map(\"mapDiv\", {\n                center: [114.41, 30.78],\n                zoom:9\n            });\n\n            var tiledMapServiceLayer = new ArcGISTiledMapServiceLayer(\"http://esri705.gis.local:6080/arcgis/rest/services/hbtest_tiled/MapServer\", {\n                \"opacity\": 0.5\n            });\n            map.addLayer(tiledMapServiceLayer);\n\n\n\n            var queryTask = new QueryTask(\"http://esri705.gis.local:6080/arcgis/rest/services/hbtest_video/MapServer/0\");\n            var query = new Query();\n            // 返回空间信息\n            query.returnGeometry = true;\n            query.outFields = [\"OBJECTID\", \"Video_Name\"];\n\n            on(dom.byId(\"getInfoByName\"), \"click\", getInfoByName);           \n            // get position information by name\n            function getInfoByName() {\n                query.text = dom.byId(\"bridgeName\").value;\n                queryTask.execute(query, showResults);\n            }\n       \n            // \n            function showResults(results) {\n                var resultItems = [];\n                var resultCount = results.features.length;\n                for (var i = 0; i < resultCount; i++) {\n                 \n                    resultItems.push(\"<b>Object:</b>  \"+ results.features[i].attributes.OBJECTID + \"<br>\");\n                    resultItems.push(\"<b>设备名称:</b> \" + results.features[i].attributes.Video_Name + \"<br>\");\n                    var lon = results.features[i].geometry.getLongitude();\n                    var lat = results.features[i].geometry.getLatitude();                   \n                    resultItems.push(\"<a href='#' onclick=getPositionById('\" + lon + \"','\" + lat + \"')>定位</a><hr></br>\");\n\n                }\n                dom.byId(\"info\").innerHTML = resultItems.join(\"\");\n            }\n\n           \n\n        });\n\n        // 定位查询\n        function getPositionById(lon, lat) {\n            var myPoint = new esri.geometry.Point(lon, lat);\n            map.centerAndZoom(myPoint, 10);\n\n        }\n\n    </script>\n\n\n</head>\n<body>\n    <div id=\"mapDiv\"></div>\n    <div id=\"searchPane\">\n        <input type=\"text\" id=\"bridgeName\" value=\"海康摄像头113\"/>\n        <input id=\"getInfoByName\" type=\"button\" value=\"搜索\" />\n        <!-- info will be created in this div -->\n        <div id=\"info\"></div>\n    </div>\n</body>\n</html>\n",
+					"file": "/D/Crmhf/Projects/Webstorm/EsriWh/WebApp/Wisdrisoft/5.根据设备名称搜索.html",
+					"file_size": 3816,
+					"file_write_time": 130731072255179894,
+					"settings":
+					{
+						"buffer_size": 3653,
+						"line_ending": "Windows"
+					}
+				},
+				{
+					"file": "/D/Crmhf/Projects/Webstorm/WebGISApp/GISApp/Try/ArcGIS for JavaScript/War/gp服务_在线.html",
+					"settings":
+					{
+						"buffer_size": 4956,
+						"line_ending": "Windows"
+					}
+				},
+				{
+					"contents": "",
+					"file": "/C/Users/Crmhf/Desktop/hosts",
+					"file_size": -1,
+					"file_write_time": -1,
+					"settings":
+					{
+						"buffer_size": 0,
+						"line_ending": "Windows"
+					}
+				},
+				{
+					"file": "/D/wamp/www/wuhan/controller/api.class.php",
+					"settings":
+					{
+						"buffer_size": 79238,
+						"line_ending": "Windows"
+					}
+				},
+				{
+					"file": "/D/wamp/www/wuhan/plugin/dzm_money/app.php",
+					"settings":
+					{
+						"buffer_size": 16892,
+						"line_ending": "Windows"
+					}
+				},
+				{
+					"file": "/D/Crmhf/Temp/UC2013-GeoEvent-weibo-master/StreamLayer.js",
+					"settings":
+					{
+						"buffer_size": 10914,
+						"line_ending": "Unix"
+					}
+				},
+				{
+					"file": "/D/Crmhf/Temp/UC2013-GeoEvent-weibo-master/Stats.js",
+					"settings":
+					{
+						"buffer_size": 2400,
+						"line_ending": "Unix"
+					}
+				},
+				{
+					"file": "/D/Crmhf/Temp/UC2013-GeoEvent-weibo-master/LayersPalette.js",
+					"settings":
+					{
+						"buffer_size": 5497,
+						"line_ending": "Unix"
+					}
+				},
+				{
+					"contents": "{\n  \"displayFieldName\" : \"\",\n  \"fieldAliases\" : {\n    \"OBJECTID\" : \"OBJECTID\",\n    \"AREA\" : \"AREA\",\n    \"PERIMETER\" : \"PERIMETER\",\n    \"RES1_4M_\" : \"RES1_4M_\",\n    \"RES1_4M_ID\" : \"RES1_4M_ID\",\n    \"GBCODE\" : \"GBCODE\",\n    \"NAME\" : \"NAME\",\n    \"ADCODE93\" : \"ADCODE93\",\n    \"ADCODE99\" : \"ADCODE99\",\n    \"ADCLASS\" : \"ADCLASS\",\n    \"PINYIN\" : \"PINYIN\"\n  },\n  \"geometryType\" : \"esriGeometryPoint\",\n  \"spatialReference\" : {\n    \"wkid\" : 4214,\n    \"latestWkid\" : 4214\n  },\n  \"fields\" : [\n    {\n      \"name\" : \"OBJECTID\",\n      \"type\" : \"esriFieldTypeOID\",\n      \"alias\" : \"OBJECTID\"\n    },\n    {\n      \"name\" : \"AREA\",\n      \"type\" : \"esriFieldTypeDouble\",\n      \"alias\" : \"AREA\"\n    },\n    {\n      \"name\" : \"PERIMETER\",\n      \"type\" : \"esriFieldTypeDouble\",\n      \"alias\" : \"PERIMETER\"\n    },\n    {\n      \"name\" : \"RES1_4M_\",\n      \"type\" : \"esriFieldTypeDouble\",\n      \"alias\" : \"RES1_4M_\"\n    },\n    {\n      \"name\" : \"RES1_4M_ID\",\n      \"type\" : \"esriFieldTypeDouble\",\n      \"alias\" : \"RES1_4M_ID\"\n    },\n    {\n      \"name\" : \"GBCODE\",\n      \"type\" : \"esriFieldTypeInteger\",\n      \"alias\" : \"GBCODE\"\n    },\n    {\n      \"name\" : \"NAME\",\n      \"type\" : \"esriFieldTypeString\",\n      \"alias\" : \"NAME\",\n      \"length\" : 30\n    },\n    {\n      \"name\" : \"ADCODE93\",\n      \"type\" : \"esriFieldTypeInteger\",\n      \"alias\" : \"ADCODE93\"\n    },\n    {\n      \"name\" : \"ADCODE99\",\n      \"type\" : \"esriFieldTypeInteger\",\n      \"alias\" : \"ADCODE99\"\n    },\n    {\n      \"name\" : \"ADCLASS\",\n      \"type\" : \"esriFieldTypeSmallInteger\",\n      \"alias\" : \"ADCLASS\"\n    },\n    {\n      \"name\" : \"PINYIN\",\n      \"type\" : \"esriFieldTypeString\",\n      \"alias\" : \"PINYIN\",\n      \"length\" : 50\n    }\n  ],\n  \"features\" : [\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 2,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 2,\n        \"RES1_4M_ID\" : 70,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"天津\",\n        \"ADCODE93\" : 120100,\n        \"ADCODE99\" : 120100,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Tianjin\"\n      },\n      \"geometry\" : {\n        \"x\" : 117.20349884033203,\n        \"y\" : 39.131118774414062\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 3,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 3,\n        \"RES1_4M_ID\" : 121,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"石家庄\",\n        \"ADCODE93\" : 130101,\n        \"ADCODE99\" : 130101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Shijiazhuang\"\n      },\n      \"geometry\" : {\n        \"x\" : 114.48977661132812,\n        \"y\" : 38.045127868652344\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 4,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 4,\n        \"RES1_4M_ID\" : 220,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"太原\",\n        \"ADCODE93\" : 140101,\n        \"ADCODE99\" : 140101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Taiyuan\"\n      },\n      \"geometry\" : {\n        \"x\" : 112.56935119628906,\n        \"y\" : 37.871112823486328\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 5,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 5,\n        \"RES1_4M_ID\" : 322,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"呼和浩特\",\n        \"ADCODE93\" : 150101,\n        \"ADCODE99\" : 150101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Huhehaote\"\n      },\n      \"geometry\" : {\n        \"x\" : 111.66329956054687,\n        \"y\" : 40.820941925048828\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 6,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 6,\n        \"RES1_4M_ID\" : 412,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"沈阳\",\n        \"ADCODE93\" : 210101,\n        \"ADCODE99\" : 210101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Shenyang\"\n      },\n      \"geometry\" : {\n        \"x\" : 123.41168212890625,\n        \"y\" : 41.796615600585938\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 7,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 7,\n        \"RES1_4M_ID\" : 465,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"长春\",\n        \"ADCODE93\" : 220101,\n        \"ADCODE99\" : 220101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Changchun\"\n      },\n      \"geometry\" : {\n        \"x\" : 125.3154296875,\n        \"y\" : 43.892562866210938\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 8,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 8,\n        \"RES1_4M_ID\" : 508,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"哈尔滨\",\n        \"ADCODE93\" : 230101,\n        \"ADCODE99\" : 230101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Haerbin\"\n      },\n      \"geometry\" : {\n        \"x\" : 126.64334106445313,\n        \"y\" : 45.741493225097656\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 9,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 9,\n        \"RES1_4M_ID\" : 584,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"上海\",\n        \"ADCODE93\" : 310100,\n        \"ADCODE99\" : 310100,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Shanghai\"\n      },\n      \"geometry\" : {\n        \"x\" : 121.46926879882812,\n        \"y\" : 31.238176345825195\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 10,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 10,\n        \"RES1_4M_ID\" : 594,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"南京\",\n        \"ADCODE93\" : 320101,\n        \"ADCODE99\" : 320101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Nanjing\"\n      },\n      \"geometry\" : {\n        \"x\" : 118.77278137207031,\n        \"y\" : 32.047615051269531\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 11,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 11,\n        \"RES1_4M_ID\" : 668,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"杭州\",\n        \"ADCODE93\" : 330101,\n        \"ADCODE99\" : 330101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Hangzhou\"\n      },\n      \"geometry\" : {\n        \"x\" : 120.15924835205078,\n        \"y\" : 30.265995025634769\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 12,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 12,\n        \"RES1_4M_ID\" : 741,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"合肥\",\n        \"ADCODE93\" : 340101,\n        \"ADCODE99\" : 340101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Hefei\"\n      },\n      \"geometry\" : {\n        \"x\" : 117.27570343017578,\n        \"y\" : 31.863254547119141\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 13,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 13,\n        \"RES1_4M_ID\" : 823,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"福州\",\n        \"ADCODE93\" : 350101,\n        \"ADCODE99\" : 350101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Fuzhou\"\n      },\n      \"geometry\" : {\n        \"x\" : 119.29781341552734,\n        \"y\" : 26.078590393066406\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 14,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 14,\n        \"RES1_4M_ID\" : 898,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"南昌\",\n        \"ADCODE93\" : 360101,\n        \"ADCODE99\" : 360101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Nanchang\"\n      },\n      \"geometry\" : {\n        \"x\" : 115.89991760253906,\n        \"y\" : 28.675991058349609\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 15,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 15,\n        \"RES1_4M_ID\" : 981,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"济南\",\n        \"ADCODE93\" : 370101,\n        \"ADCODE99\" : 370101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Jinan\"\n      },\n      \"geometry\" : {\n        \"x\" : 117.00559997558594,\n        \"y\" : 36.667072296142578\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 16,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 16,\n        \"RES1_4M_ID\" : 1084,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"郑州\",\n        \"ADCODE93\" : 410101,\n        \"ADCODE99\" : 410101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Zhengzhou\"\n      },\n      \"geometry\" : {\n        \"x\" : 113.65004730224609,\n        \"y\" : 34.757034301757813\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 17,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 17,\n        \"RES1_4M_ID\" : 1207,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"武汉\",\n        \"ADCODE93\" : 420101,\n        \"ADCODE99\" : 420101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Wuhan\"\n      },\n      \"geometry\" : {\n        \"x\" : 114.29193878173828,\n        \"y\" : 30.567514419555664\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 18,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 18,\n        \"RES1_4M_ID\" : 1344,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"长沙\",\n        \"ADCODE93\" : 430101,\n        \"ADCODE99\" : 430101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Changsha\"\n      },\n      \"geometry\" : {\n        \"x\" : 112.98126983642578,\n        \"y\" : 28.200824737548828\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 19,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 19,\n        \"RES1_4M_ID\" : 1403,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"广州\",\n        \"ADCODE93\" : 440101,\n        \"ADCODE99\" : 440101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Guangzhou\"\n      },\n      \"geometry\" : {\n        \"x\" : 113.26142883300781,\n        \"y\" : 23.118911743164063\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 20,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 20,\n        \"RES1_4M_ID\" : 1509,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"南宁\",\n        \"ADCODE93\" : 450101,\n        \"ADCODE99\" : 450101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Nanning\"\n      },\n      \"geometry\" : {\n        \"x\" : 108.311767578125,\n        \"y\" : 22.806543350219727\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 21,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 21,\n        \"RES1_4M_ID\" : 1580,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"海口\",\n        \"ADCODE93\" : 460100,\n        \"ADCODE99\" : 460100,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Haikou\"\n      },\n      \"geometry\" : {\n        \"x\" : 110.34651184082031,\n        \"y\" : 20.031793594360352\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 22,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 22,\n        \"RES1_4M_ID\" : 1620,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"成都\",\n        \"ADCODE93\" : 510101,\n        \"ADCODE99\" : 510101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Chengdu\"\n      },\n      \"geometry\" : {\n        \"x\" : 104.08175659179687,\n        \"y\" : 30.661056518554691\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 23,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 23,\n        \"RES1_4M_ID\" : 1622,\n        \"GBCODE\" : 31030,\n        \"NAME\" : \"重庆\",\n        \"ADCODE93\" : 510201,\n        \"ADCODE99\" : 500100,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Chongqing\"\n      },\n      \"geometry\" : {\n        \"x\" : 106.51033782958984,\n        \"y\" : 29.558176040649414\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 24,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 24,\n        \"RES1_4M_ID\" : 1838,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"贵阳\",\n        \"ADCODE93\" : 520101,\n        \"ADCODE99\" : 520101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Guiyang\"\n      },\n      \"geometry\" : {\n        \"x\" : 106.71137237548828,\n        \"y\" : 26.576873779296875\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 25,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 25,\n        \"RES1_4M_ID\" : 1852,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"昆明\",\n        \"ADCODE93\" : 530101,\n        \"ADCODE99\" : 530101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Kunming\"\n      },\n      \"geometry\" : {\n        \"x\" : 102.70456695556641,\n        \"y\" : 25.043844223022464\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 26,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 26,\n        \"RES1_4M_ID\" : 1972,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"拉萨\",\n        \"ADCODE93\" : 540101,\n        \"ADCODE99\" : 540101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Lhasa\"\n      },\n      \"geometry\" : {\n        \"x\" : 91.132049560546875,\n        \"y\" : 29.657588958740234\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 27,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 27,\n        \"RES1_4M_ID\" : 2041,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"西安\",\n        \"ADCODE93\" : 610101,\n        \"ADCODE99\" : 610101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Xi'an\"\n      },\n      \"geometry\" : {\n        \"x\" : 108.94902801513672,\n        \"y\" : 34.261684417724609\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 28,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 28,\n        \"RES1_4M_ID\" : 2134,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"兰州\",\n        \"ADCODE93\" : 620101,\n        \"ADCODE99\" : 620101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Lanzhou\"\n      },\n      \"geometry\" : {\n        \"x\" : 103.75005340576172,\n        \"y\" : 36.068038940429688\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 29,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 29,\n        \"RES1_4M_ID\" : 2213,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"西宁\",\n        \"ADCODE93\" : 630100,\n        \"ADCODE99\" : 630100,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Xining\"\n      },\n      \"geometry\" : {\n        \"x\" : 101.78745269775391,\n        \"y\" : 36.609447479248047\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 30,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 30,\n        \"RES1_4M_ID\" : 2253,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"银川\",\n        \"ADCODE93\" : 640101,\n        \"ADCODE99\" : 640101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Yinchuan\"\n      },\n      \"geometry\" : {\n        \"x\" : 106.27194213867187,\n        \"y\" : 38.468009948730469\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 31,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 31,\n        \"RES1_4M_ID\" : 2274,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"乌鲁木齐\",\n        \"ADCODE93\" : 650101,\n        \"ADCODE99\" : 650101,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Wulumuqi\"\n      },\n      \"geometry\" : {\n        \"x\" : 87.606117248535156,\n        \"y\" : 43.790939331054688\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 32,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 32,\n        \"RES1_4M_ID\" : 2358,\n        \"GBCODE\" : 31020,\n        \"NAME\" : \"台北\",\n        \"ADCODE93\" : 710001,\n        \"ADCODE99\" : 710001,\n        \"ADCLASS\" : 2,\n        \"PINYIN\" : \"Taipei Shih\"\n      },\n      \"geometry\" : {\n        \"x\" : 121.5142822265625,\n        \"y\" : 25.049127578735352\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 33,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 33,\n        \"RES1_4M_ID\" : 1384,\n        \"GBCODE\" : 31030,\n        \"NAME\" : \"澳门\",\n        \"ADCODE93\" : 820000,\n        \"ADCODE99\" : 820000,\n        \"ADCLASS\" : 9,\n        \"PINYIN\" : \"Macao\"\n      },\n      \"geometry\" : {\n        \"x\" : 113.55005645751953,\n        \"y\" : 22.200796127319336\n      }\n    },\n    {\n      \"attributes\" : {\n        \"OBJECTID\" : 34,\n        \"AREA\" : 0,\n        \"PERIMETER\" : 0,\n        \"RES1_4M_\" : 34,\n        \"RES1_4M_ID\" : 2377,\n        \"GBCODE\" : 31030,\n        \"NAME\" : \"香港\",\n        \"ADCODE93\" : 810000,\n        \"ADCODE99\" : 810000,\n        \"ADCLASS\" : 9,\n        \"PINYIN\" : \"Hong Kong\"\n      },\n      \"geometry\" : {\n        \"x\" : 114.15440368652344,\n        \"y\" : 22.280685424804688\n      }\n    }\n  ]\n}",
+					"file": "/C/Users/Crmhf/Desktop/111/1.json",
+					"file_size": 15806,
+					"file_write_time": 130830475313797988,
+					"settings":
+					{
+						"buffer_size": 15662,
+						"line_ending": "Unix"
+					}
+				}
+			],
+			"build_system": "",
+			"command_palette":
+			{
+				"height": 374.0,
+				"selected_items":
+				[
+					[
+						"ip",
+						"Package Control: Install Package"
+					],
+					[
+						"remove ",
+						"Package Control: Remove Package"
+					],
+					[
+						"inst",
+						"Package Control: Install Package"
+					],
+					[
+						"remove",
+						"Emmet: Remove Tag"
+					],
+					[
+						"insta",
+						"Package Control: Install Package"
+					],
+					[
+						"install",
+						"Package Control: Install Package"
+					],
+					[
+						"ins",
+						"Package Control: Install Package"
+					],
+					[
+						"package",
+						"Package Control: Remove Package"
+					],
+					[
+						"pack",
+						"Package Control: Remove Package"
+					]
+				],
+				"width": 496.0
+			},
+			"console":
+			{
+				"height": 125.0
+			},
+			"distraction_free":
+			{
+				"menu_visible": true,
+				"show_minimap": false,
+				"show_open_files": false,
+				"show_tabs": false,
+				"side_bar_visible": false,
+				"status_bar_visible": false
+			},
+			"file_history":
+			[
+				"/E/Cache/BaiduYunDownload/C277-开发大赛/C277-开发源代码/web前端代码/edit.js",
+				"/E/Cache/BaiduYunDownload/C277-开发大赛/C277-开发源代码/web前端代码/maplabels.js",
+				"/C/Users/Crmhf/Desktop/onemap/onemap/css/aaa.css",
+				"/D/wamp/www/arcgis_js_api/library/3.10/3.10/js/esri/layers/WMSLayer.js",
+				"/D/wamp/www/arcgis_js_api/library/3.10/3.10/js/esri/layers/ArcGISDynamicMapServiceLayer.js",
+				"/D/arcgisserver/directories/arcgiscache/hbtest_tiled/Layers/_alllayers/L00/R0000C0000.bundle",
+				"/I/Lite/SoftPortable/SublimeTextPortable/App/SublimeText64/Data/Packages/Default/Preferences.sublime-settings",
+				"/D/Crmhf/Projects/Webstorm/EsriWh/WebApp/Wisdrisoft/5.根据设备名称搜索.html",
+				"/C/Users/Crmhf/Desktop/实验2/test2gps.html",
+				"/C/Users/Crmhf/Desktop/1.json",
+				"/C/Users/Crmhf/Desktop/php.ini",
+				"/G/Soft/vcloud/安装文件/admin/template/userquota.html",
+				"/G/Soft/vcloud/安装文件/admin/index.html",
+				"/C/Users/Crmhf/Desktop/1.html",
+				"/G/Soft/vcloud/安装文件/admin/template/userpro.html",
+				"/C/Users/Crmhf/Desktop/WEB-INF/mountpath.sh",
+				"/C/Users/Crmhf/Desktop/WEB-INF/guestcustomizationscript.sh",
+				"/C/Users/Crmhf/Desktop/WEB-INF/oracleconfig.xml",
+				"/G/Soft/vcloud/安装文件/proxy.conf",
+				"/G/Soft/vcloud/安装文件/schema_oracle.sql",
+				"/D/Crmhf/Yun/Work/ESRI/2015/03河大/Demo/MapTour/index.html",
+				"/C/Users/Crmhf/桌面/portal-20150401.162155-1212-0.0.log",
+				"/D/wamp/www/esri/indexcr.html",
+				"/D/wamp/www/esri/index.html",
+				"/D/wamp/www/esri/index3.html",
+				"/E/Cache/ChromeDownload/weixinpress-0.5/weixinpress/weixinpress.php",
+				"/D/wamp/www/esri/index2.html",
+				"/D/Crmhf/Projects/Webstorm/Basic-Story-Map-FeatureLayer/index_basic.html",
+				"/E/Cache/ChromeDownload/storytelling_text_legend/config.js",
+				"/D/Crmhf/Projects/Webstorm/EsriWh/WebApp/Wisdrisoft/2.检测设备弹出仪表信息.html",
+				"/D/wamp/www/portal/storytelling_text_legend/index.html",
+				"/D/temp/esri/index.html",
+				"/D/wamp/www/portal/SimpleMapViewer/index.html",
+				"/E/Cache/ChromeDownload/storytelling_text_legend/index.html",
+				"/C/Windows/System32/drivers/etc/hosts",
+				"/D/Crmhf/Yun/Work/ESRI/2015/03河大/Demo/SimpleMapViewer (1)/index.html",
+				"/D/wamp/www/arcgis_js_api/library/3.10/3.10/init.js",
+				"/C/Users/Crmhf/Desktop/hosts",
+				"/D/wamp/bin/apache/apache2.4.9/conf/httpd.conf",
+				"/D/wamp/www/arcgis_js_api/library/3.10/3.10/js/dojo/dojo/dojo.js",
+				"/D/wamp/www/arcgis_js_api/library/3.10/3.10compact/init.js",
+				"/C/Users/Crmhf/桌面/index.html",
+				"/C/Users/Crmhf/AppData/Roaming/ESRI/Desktop10.2/ArcCatalog/sde.sde",
+				"/C/Users/Crmhf/桌面/hosts",
+				"/C/Users/Crmhf/桌面/test.aspx",
+				"/C/Users/Crmhf/桌面/portal-config.properties",
+				"/E/wamp/www/portal/SimpleMapViewer/index.html",
+				"/D/wamp/www/Basic-Story-Map/index_basic.html",
+				"/C/Users/Crmhf/Desktop/editmoban.php",
+				"/C/Users/Crmhf/Desktop/hosts_2015-03-19-181726.bak",
+				"/C/Users/Crmhf/Desktop/1111/logincheck.php",
+				"/C/Users/Crmhf/Desktop/1111/main.php",
+				"/C/Users/Crmhf/Desktop/1111/addstyle.php",
+				"/C/Users/Crmhf/Desktop/wxadmin.php",
+				"/C/Users/Crmhf/Desktop/addmoban.php",
+				"/C/inetpub/wwwroot/portal/SimpleMapViewer/commonConfig.js",
+				"/C/inetpub/wwwroot/portal/SimpleMapViewer/index.html",
+				"/C/inetpub/wwwroot/portal/SimpleMapViewer/javascript/layout.js",
+				"/C/inetpub/wwwroot/portal/HeaderFooter/index.html",
+				"/E/wamp/www/shortlist-storytelling-template-js/app/main.js",
+				"/E/wamp/www/Basic-Story-Map/manage.html",
+				"/E/wamp/www/Basic-Story-Map/getPosition.html",
+				"/E/wamp/www/Basic-Story-Map/addPoint.html",
+				"/E/wamp/www/storyManage/controller/api.class.php",
+				"/F/Cache/ChromeDownload/koteilbs.sql",
+				"/E/wamp/www/Basic-Story-Map/index.html",
+				"/E/wamp/www/portal/HeaderFooter/index.html",
+				"/E/wamp/www/portal/HeaderFooter/commonConfig.js",
+				"/E/wamp/www/portal/index/index.html",
+				"/E/wamp/www/Basic-Story-Map-FeatureLayer/manage.html",
+				"/E/wamp/www/Basic-Story-Map-FeatureLayer/index_basic.html",
+				"/E/wamp/www/shortlist-storytelling-template-js/index.html",
+				"/E/wamp/www/shortlist-storytelling-template-js/index_portal.html",
+				"/E/wamp/www/storyManage/admin/manage.html",
+				"/E/wamp/www/story/index.html",
+				"/E/wamp/www/story.sql",
+				"/E/wamp/www/Storymap.sql",
+				"/E/wamp/www/Basic-Story-Map/app/main.js",
+				"/C/Users/Crmhf/Desktop/index.html",
+				"/G/Work/XG/SoftTest/langmanzhuabao/Readme.txt",
+				"/C/inetpub/wwwroot/portal/HeaderFooter/configuration_panel.js",
+				"/C/inetpub/wwwroot/portal/SimpleMapViewer/css/layout.css",
+				"/C/inetpub/wwwroot/portal/HeaderFooter/commonConfig.js",
+				"/C/inetpub/wwwroot/portal/SimpleMapViewer/config.json",
+				"/F/Cache/ChromeDownload/wp_posts.sql",
+				"/F/Cache/BaiduYunDownload/微信编辑器V1带后台/wxedit2015-v1-all/datainsert.sql",
+				"/F/Cache/BaiduYunDownload/微信编辑器V1带后台/wxedit2015-v1-all/conn.php",
+				"/C/Users/Crmhf/Desktop/boot.ini",
+				"/C/Users/Crmhf/Desktop/menu.lst",
+				"/C/Users/Crmhf/Desktop/main.js",
+				"/E/wamp/www/Basic-Story-Map/index_basic.html",
+				"/E/wamp/www/story/app/main.js",
+				"/E/wamp/www/Viewer/index.html",
+				"/F/QQPCmgr/Temp/Rar$DRa0.783/sh-1.3.0/install.sh",
+				"/C/Users/Crmhf/Desktop/fcgiext.ini",
+				"/E/Crmhf/web/zy/editor/dialog/img.htm",
+				"/E/wamp/www/chiyiran/wp-content/themes/chiyiran/functions.php",
+				"/C/Users/Crmhf/Desktop/错误404页面/aliyun/aliyun-oss4wp/wordpress-oss.php",
+				"/C/Users/Crmhf/Desktop/错误404页面/aliyun/aliyun-oss4wp/wordpress-oss/conf.inc.php",
+				"/C/Users/Crmhf/Desktop/错误404页面/aliyun/aliyun-oss4wp/wordpress-oss/config-sample.php",
+				"/C/Users/Crmhf/Desktop/错误404页面/aliyun/aliyun-oss4wp/wordpress-oss/lib/api/ver.php",
+				"/C/Users/Crmhf/Desktop/错误404页面/aliyun/aliyun-oss4wp/wordpress-oss/admin-options.html",
+				"/C/Users/Crmhf/Desktop/css/text.css",
+				"/C/Users/Crmhf/Desktop/temp/css/common.css",
+				"/C/Users/Crmhf/Desktop/temp/css/index.css",
+				"/C/Users/Crmhf/Desktop/temp/css/text.css",
+				"/C/Users/Crmhf/Desktop/temp/css/list.css",
+				"/C/Users/Crmhf/Desktop/temp/show.asp",
+				"/C/Users/Crmhf/Desktop/temp/map.asp",
+				"/C/Users/Crmhf/Desktop/temp/404.html",
+				"/E/Crmhf/web/zy/article/398.html",
+				"/C/Users/Crmhf/Desktop/temp/astr.js",
+				"/C/Users/Crmhf/Desktop/temp1.php",
+				"/C/Users/Crmhf/Desktop/aspjpeg.asp",
+				"/C/Users/Crmhf/Desktop/temp/wei.php",
+				"/C/Users/Crmhf/Desktop/index.php",
+				"/C/Users/Crmhf/Desktop/temp/head.asp",
+				"/C/Users/Crmhf/Desktop/php/jssdk.php",
+				"/C/Users/Crmhf/Desktop/php/sample.php",
+				"/C/Users/Crmhf/Desktop/php/access_token.json",
+				"/C/Users/Crmhf/Desktop/php/jsapi_ticket.json",
+				"/C/Users/Crmhf/Desktop/sample/readme.txt",
+				"/C/Users/Crmhf/Desktop/wei.asp",
+				"/C/Users/Crmhf/Desktop/php/.jssdk.php.swp",
+				"/G/Wife/编辑/wenzhang.html",
+				"/C/Users/Crmhf/Desktop/FileZilla.xml",
+				"/C/Users/Crmhf/Desktop/temp/备案页面.html",
+				"/C/Users/Crmhf/Desktop/temp/text.css"
+			],
+			"find":
+			{
+				"height": 37.0
+			},
+			"find_in_files":
+			{
+				"height": 0.0,
+				"where_history":
+				[
+				]
+			},
+			"find_state":
+			{
+				"case_sensitive": false,
+				"find_history":
+				[
+					"scandir",
+					"交易",
+					"map",
+					"localhost",
+					"3.10",
+					"80",
+					"<!",
+					"@",
+					"item",
+					"storymap_itemdate",
+					"map",
+					"Section Start:",
+					"html_errors",
+					"errors",
+					"display",
+					"type",
+					"errors",
+					"weixin",
+					"ezhenjiu",
+					"ZYeditor",
+					"ok3w_ads",
+					"weixin",
+					"maodou",
+					"images",
+					"OSS删除锁",
+					"域名",
+					"douzimi",
+					"chiyiran",
+					"ic",
+					"ico",
+					"Specs主题是一款基于BootStrap创建的相应式Wordpress主",
+					"fonts.googleapis.com",
+					"the_content",
+					"INSERT INTO  `board`",
+					"PROCEDURE",
+					"pre",
+					"www.douzimi.",
+					"www.chiyiran.com"
+				],
+				"highlight": true,
+				"in_selection": false,
+				"preserve_case": false,
+				"regex": false,
+				"replace_history":
+				[
+					"192.168.0.108",
+					"zhongyiku",
+					"douzimi",
+					"esri.chiyiran",
+					"www.douzimi.com"
+				],
+				"reverse": false,
+				"show_context": true,
+				"use_buffer2": true,
+				"whole_word": false,
+				"wrap": true
+			},
+			"folders":
+			[
+				{
+					"path": "/C/inetpub/wwwroot/zj"
+				},
+				{
+					"path": "/E/Crmhf/ProjectSublime/zy"
+				}
+			],
+			"groups":
+			[
+				{
+					"selected": 5,
+					"sheets":
+					[
+						{
+							"buffer": 0,
+							"file": "/C/Users/Crmhf/Desktop/11.py",
+							"settings":
+							{
+								"buffer_size": 0,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										0,
+										0
+									]
+								],
+								"settings":
+								{
+									"origin_encoding": "UTF-8",
+									"syntax": "Packages/Python/Python.tmLanguage"
+								},
+								"translation.x": 0.0,
+								"translation.y": 540.0,
+								"zoom_level": 1.0
+							},
+							"type": "text"
+						},
+						{
+							"buffer": 1,
+							"file": "/C/Users/Crmhf/Desktop/222.py",
+							"settings":
+							{
+								"buffer_size": 0,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										0,
+										0
+									]
+								],
+								"settings":
+								{
+									"origin_encoding": "UTF-8",
+									"syntax": "Packages/Python/Python.tmLanguage"
+								},
+								"translation.x": 0.0,
+								"translation.y": 0.0,
+								"zoom_level": 1.0
+							},
+							"type": "text"
+						},
+						{
+							"buffer": 2,
+							"file": "/C/Users/Crmhf/Desktop/111.py",
+							"settings":
+							{
+								"buffer_size": 0,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										0,
+										0
+									]
+								],
+								"settings":
+								{
+									"origin_encoding": "UTF-8",
+									"syntax": "Packages/Python/Python.tmLanguage"
+								},
+								"translation.x": 0.0,
+								"translation.y": 180.0,
+								"zoom_level": 1.0
+							},
+							"type": "text"
+						},
+						{
+							"buffer": 3,
+							"file": "/D/Crmhf/Projects/Webstorm/EsriWh/WebApp/Wisdrisoft/0.直接使用基础的地图.html",
+							"settings":
+							{
+								"buffer_size": 1185,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										1079,
+										1079
+									]
+								],
+								"settings":
+								{
+									"in_converting": true,
+									"origin_encoding": "UTF-8-SIG",
+									"syntax": "Packages/HTML/HTML.tmLanguage",
+									"tab_size": 4,
+									"translate_tabs_to_spaces": true
+								},
+								"translation.x": 0.0,
+								"translation.y": 336.0,
+								"zoom_level": 1.0
+							},
+							"type": "text"
+						},
+						{
+							"buffer": 4,
+							"file": "/D/Crmhf/Projects/Webstorm/EsriWh/WebApp/Wisdrisoft/2.自定义弹出控件_检测设备.html",
+							"settings":
+							{
+								"buffer_size": 3089,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										2660,
+										2660
+									]
+								],
+								"settings":
+								{
+									"in_converting": true,
+									"origin_encoding": "UTF-8-SIG",
+									"syntax": "Packages/HTML/HTML.tmLanguage",
+									"tab_size": 2,
+									"translate_tabs_to_spaces": true
+								},
+								"translation.x": 0.0,
+								"translation.y": 2016.0,
+								"zoom_level": 1.0
+							},
+							"type": "text"
+						},
+						{
+							"buffer": 5,
+							"file": "/D/Crmhf/Projects/Webstorm/EsriWh/WebApp/Wisdrisoft/2.检测设备弹出仪表信息.html",
+							"settings":
+							{
+								"buffer_size": 4785,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										1193,
+										1193
+									]
+								],
+								"settings":
+								{
+									"in_converting": true,
+									"origin_encoding": "UTF-8-SIG",
+									"syntax": "Packages/HTML/HTML.tmLanguage",
+									"tab_size": 4,
+									"translate_tabs_to_spaces": true
+								},
+								"translation.x": 0.0,
+								"translation.y": 128.0,
+								"zoom_level": 1.0
+							},
+							"type": "text"
+						},
+						{
+							"buffer": 6,
+							"file": "/D/Crmhf/Projects/Webstorm/EsriWh/WebApp/Wisdrisoft/5.根据设备名称搜索.html",
+							"settings":
+							{
+								"buffer_size": 3653,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										3325,
+										3183
+									]
+								],
+								"settings":
+								{
+									"is_preview": true,
+									"syntax": "Packages/HTML/HTML.tmLanguage",
+									"tab_size": 4,
+									"translate_tabs_to_spaces": true
+								},
+								"translation.x": 0.0,
+								"translation.y": 1260.0,
+								"zoom_level": 1.0
+							},
+							"type": "text"
+						},
+						{
+							"buffer": 7,
+							"file": "/D/Crmhf/Projects/Webstorm/WebGISApp/GISApp/Try/ArcGIS for JavaScript/War/gp服务_在线.html",
+							"settings":
+							{
+								"buffer_size": 4956,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										4060,
+										4060
+									]
+								],
+								"settings":
+								{
+									"is_preview": true,
+									"origin_encoding": "ASCII",
+									"syntax": "Packages/HTML/HTML.tmLanguage",
+									"tab_size": 4,
+									"translate_tabs_to_spaces": true
+								},
+								"translation.x": 0.0,
+								"translation.y": 3024.0,
+								"zoom_level": 1.0
+							},
+							"type": "text"
+						},
+						{
+							"buffer": 8,
+							"file": "/C/Users/Crmhf/Desktop/hosts",
+							"settings":
+							{
+								"buffer_size": 0,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										0,
+										0
+									]
+								],
+								"settings":
+								{
+									"is_preview": true,
+									"origin_encoding": "ASCII",
+									"syntax": "Packages/Text/Plain text.tmLanguage"
+								},
+								"translation.x": 0.0,
+								"translation.y": 1340.0,
+								"zoom_level": 1.0
+							},
+							"type": "text"
+						},
+						{
+							"buffer": 9,
+							"file": "/D/wamp/www/wuhan/controller/api.class.php",
+							"settings":
+							{
+								"buffer_size": 79238,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										0,
+										0
+									]
+								],
+								"settings":
+								{
+									"is_preview": true,
+									"origin_encoding": "UTF-8",
+									"syntax": "Packages/PHP/PHP.tmLanguage"
+								},
+								"translation.x": 0.0,
+								"translation.y": 43940.0,
+								"zoom_level": 1.0
+							},
+							"type": "text"
+						},
+						{
+							"buffer": 10,
+							"file": "/D/wamp/www/wuhan/plugin/dzm_money/app.php",
+							"settings":
+							{
+								"buffer_size": 16892,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										7364,
+										7381
+									]
+								],
+								"settings":
+								{
+									"is_preview": true,
+									"origin_encoding": "UTF-8",
+									"syntax": "Packages/PHP/PHP.tmLanguage",
+									"translate_tabs_to_spaces": false
+								},
+								"translation.x": 0.0,
+								"translation.y": 3480.0,
+								"zoom_level": 1.0
+							},
+							"type": "text"
+						},
+						{
+							"buffer": 11,
+							"file": "/D/Crmhf/Temp/UC2013-GeoEvent-weibo-master/StreamLayer.js",
+							"settings":
+							{
+								"buffer_size": 10914,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										4679,
+										4679
+									]
+								],
+								"settings":
+								{
+									"is_preview": true,
+									"origin_encoding": "ASCII",
+									"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+									"tab_size": 2,
+									"translate_tabs_to_spaces": true
+								},
+								"translation.x": 0.0,
+								"translation.y": 3000.0,
+								"zoom_level": 1.0
+							},
+							"type": "text"
+						},
+						{
+							"buffer": 12,
+							"file": "/D/Crmhf/Temp/UC2013-GeoEvent-weibo-master/Stats.js",
+							"settings":
+							{
+								"buffer_size": 2400,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										236,
+										236
+									]
+								],
+								"settings":
+								{
+									"is_preview": true,
+									"origin_encoding": "ASCII",
+									"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+									"tab_size": 2,
+									"translate_tabs_to_spaces": true
+								},
+								"translation.x": 0.0,
+								"translation.y": 0.0,
+								"zoom_level": 1.0
+							},
+							"type": "text"
+						},
+						{
+							"buffer": 13,
+							"file": "/D/Crmhf/Temp/UC2013-GeoEvent-weibo-master/LayersPalette.js",
+							"settings":
+							{
+								"buffer_size": 5497,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										501,
+										501
+									]
+								],
+								"settings":
+								{
+									"is_preview": true,
+									"origin_encoding": "ASCII",
+									"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+									"tab_size": 2,
+									"translate_tabs_to_spaces": true
+								},
+								"translation.x": 0.0,
+								"translation.y": 2460.0,
+								"zoom_level": 1.0
+							},
+							"type": "text"
+						},
+						{
+							"buffer": 14,
+							"file": "/C/Users/Crmhf/Desktop/111/1.json",
+							"settings":
+							{
+								"buffer_size": 15662,
+								"regions":
+								{
+								},
+								"selection":
+								[
+									[
+										0,
+										0
+									]
+								],
+								"settings":
+								{
+									"in_converting": true,
+									"is_preview": true,
+									"origin_encoding": "UTF-8-SIG",
+									"syntax": "Packages/JavaScript/JSON.tmLanguage",
+									"tab_size": 2,
+									"translate_tabs_to_spaces": true
+								},
+								"translation.x": 0.0,
+								"translation.y": 6240.0,
+								"zoom_level": 1.0
+							},
+							"type": "text"
+						}
+					]
+				}
+			],
+			"incremental_find":
+			{
+				"height": 0.0
+			},
+			"input":
+			{
+				"height": 0.0
+			},
+			"layout":
+			{
+				"cells":
+				[
+					[
+						0,
+						0,
+						1,
+						1
+					]
+				],
+				"cols":
+				[
+					0.0,
+					1.0
+				],
+				"rows":
+				[
+					0.0,
+					1.0
+				]
+			},
+			"menu_visible": true,
+			"position": "0,2,3,-32000,-32000,-1,-1,728,472,215,1120",
+			"replace":
+			{
+				"height": 70.0
+			},
+			"save_all_on_build": true,
+			"select_file":
+			{
+				"height": 0.0,
+				"selected_items":
+				[
+				],
+				"width": 0.0
+			},
+			"select_project":
+			{
+				"height": 500.0,
+				"selected_items":
+				[
+				],
+				"width": 380.0
+			},
+			"show_minimap": true,
+			"show_open_files": false,
+			"show_tabs": true,
+			"side_bar_visible": true,
+			"side_bar_width": 265.0,
+			"status_bar_visible": true,
+			"window_id": 1,
+			"workspace_name": ""
+		}
+	],
+	"workspaces":
+	{
+		"recent_workspaces":
+		[
+		]
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"color_scheme": "Packages/Color Scheme - Default/Monokai Bright.tmTheme",
+	"flatland_sidebar_tree_xsmall": true,
+	"font_face": "YaHei Consolas Hybrid",
+	"font_size": 12,
+	"ignored_packages":
+	[
+		"Vintage"
+	],
+	"theme": "Flatland Dark.sublime-theme",
+	"update_check": false
+}

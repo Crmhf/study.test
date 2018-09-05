@@ -1,0 +1,18 @@
+{
+	"bootstrapped": true,
+	"in_process_packages":
+	[
+	],
+	"installed_packages":
+	[
+		"Alignment",
+		"ConvertToUTF8",
+		"DocBlockr",
+		"Emmet",
+		"jQuery",
+		"JsFormat",
+		"Package Control",
+		"Theme - Flatland",
+		"TortoiseSVN"
+	]
+}
